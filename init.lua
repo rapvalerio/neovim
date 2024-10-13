@@ -40,6 +40,7 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 vim.keymap.set('n', '<C-n>', ':Neotree <CR>', { desc = 'Show tree of files' })
 vim.keymap.set('n', '<A-up>', ':m .-2<CR>==', { desc = 'Move line up' })
 vim.keymap.set('n', '<A-down>', ':m .+1<CR>==', { desc = 'Move line down' })
+vim.keymap.set('n', '<A-left>', '<C-o>', { desc = 'Back to last line' })
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
@@ -261,9 +262,6 @@ require('lazy').setup({
           end
           map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
           map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-
-          -- Jump to the implementation of the word under your cursor.
-          --  Useful when your language has ways of declaring types without an actual implementation.
           map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
 
           -- Jump to the type of the word under your cursor.
@@ -408,6 +406,9 @@ require('lazy').setup({
       }
     end,
   },
+  {
+    'jwalton512/vim-blade',
+  },
   -- {
   --   'nvim-tree/nvim-tree.lua',
   -- },
@@ -425,6 +426,9 @@ require('lazy').setup({
   },
   {
     'rose-pine/neovim',
+  },
+  {
+    'catppuccin/nvim',
   },
   {
     'mfussenegger/nvim-dap',
@@ -539,7 +543,8 @@ require('lazy').setup({
           -- Accept ([y]es) the completion.
           --  This will auto-import if your LSP supports it.
           --  This will expand snippets if the LSP sent a snippet.
-          ['<C-y>'] = cmp.mapping.confirm { select = true },
+          -- ['<C-y>'] = cmp.mapping.confirm { select = true },
+          ['<CR>'] = cmp.mapping.confirm { select = true },
 
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
@@ -599,7 +604,8 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'gruvbox'
+      -- vim.cmd.colorscheme 'gruvbox'
+      vim.cmd.colorscheme 'catppuccin'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
