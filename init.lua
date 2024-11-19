@@ -20,7 +20,7 @@ vim.opt.timeoutlen = 300
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+-- vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 vim.opt.scrolloff = 10
@@ -40,7 +40,8 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 vim.keymap.set('n', '<C-n>', ':Neotree <CR>', { desc = 'Show tree of files' })
 vim.keymap.set('n', '<A-up>', ':m .-2<CR>==', { desc = 'Move line up' })
 vim.keymap.set('n', '<A-down>', ':m .+1<CR>==', { desc = 'Move line down' })
-vim.keymap.set('n', '<A-left>', '<C-o>', { desc = 'Back to last line' })
+vim.keymap.set('n', '<A-left>', ':BufferPrevious<CR>', { desc = 'Previous Tab' })
+vim.keymap.set('n', '<A-right>', ':BufferNext<CR>', { desc = 'Next Tab' })
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
@@ -428,7 +429,31 @@ require('lazy').setup({
     'rose-pine/neovim',
   },
   {
+    'romgrk/barbar.nvim',
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    config = function()
+      vim.g.bufferline = {
+        animation = true,
+        auto_hide = false,
+        clickable = true,
+        icons = 'both',
+        icon_separator_active = '▎',
+        icon_separator_inactive = '▎',
+        icon_close_tab = '',
+        icon_close_tab_modified = '●',
+      }
+    end,
+  },
+  {
     'catppuccin/nvim',
+    name = 'catppuccin',
+    config = function()
+      require('catppuccin').setup {
+        flavour = 'mocha',
+        transparent_background = true,
+      }
+      vim.cmd.colorscheme 'catppuccin'
+    end,
   },
   {
     'mfussenegger/nvim-dap',
@@ -606,6 +631,7 @@ require('lazy').setup({
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
       -- vim.cmd.colorscheme 'gruvbox'
       vim.cmd.colorscheme 'catppuccin'
+      vim.o.background = 'dark'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
